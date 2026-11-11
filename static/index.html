@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grounded Strength — Workout Tracker</title>
+<meta name="theme-color" content="#0b0b0b">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/static/icons/icon-192.png">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">GROUNDED<span>STRENGTH</span></div>
+  <div class="today-date" id="todayDate"></div>
+</header>
+
+<main id="views">
+  <!-- TODAY -->
+  <section class="view active" id="view-today">
+    <div id="todayReminders"></div>
+    <div id="todayWorkout"></div>
+    <div id="todayWater"></div>
+  </section>
+
+  <!-- WEEK -->
+  <section class="view" id="view-week">
+    <div class="row-between">
+      <h2>Your Week</h2>
+      <button class="btn btn-accent" id="generateBtn">Generate week</button>
+    </div>
+    <div class="field">
+      <label>Training style for the next generated week</label>
+      <div class="segmented" id="stylePicker"></div>
+      <p class="hint" id="styleSummary"></p>
+    </div>
+    <div id="weekContent"></div>
+  </section>
+
+  <!-- MOVEMENTS -->
+  <section class="view" id="view-movements">
+    <div class="row-between">
+      <h2>Movements &amp; Maxes</h2>
+    </div>
+    <p class="hint">Your maxes drive everything. Generated workouts prescribe
+      actual weights from these percentages.</p>
+    <div id="movementList"></div>
+    <form id="addMovementForm" class="card">
+      <h3>Add a movement</h3>
+      <div class="quick-add" id="starterChips"></div>
+      <label>Name <input type="text" id="newMovementName" placeholder="e.g. Squat" required></label>
+      <label>Current max (lb) <input type="number" id="newMovementMax" inputmode="decimal" min="0" step="5" placeholder="e.g. 225"></label>
+      <button class="btn btn-accent btn-block" type="submit">Add movement</button>
+    </form>
+  </section>
+
+  <!-- PROGRESS -->
+  <section class="view" id="view-progress">
+    <h2>Progress</h2>
+    <div id="progressMaxes"></div>
+    <h3 class="subhead">Completed workouts</h3>
+    <div id="progressWorkouts"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="view" id="view-settings">
+    <h2>Settings</h2>
+    <div class="card">
+      <h3>Appearance</h3>
+      <div class="row-between">
+        <span>Dark mode</span>
+        <button class="switch" id="themeToggle" role="switch" aria-checked="true"><span></span></button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Training style</h3>
+      <div class="segmented" id="settingsStylePicker"></div>
+      <p class="hint" id="settingsStyleSummary"></p>
+      <button class="btn btn-accent btn-block" id="regenStyleBtn">Regenerate this week with this style</button>
+    </div>
+    <div class="card">
+      <h3>Reminders</h3>
+      <p class="hint">Reminders show on the Today tab. On iPhone, web apps
+        can't reliably push notifications in the background — see the
+        README. While the app is open, due reminders also fire here.</p>
+      <div id="reminderForm"></div>
+      <button class="btn btn-accent btn-block" id="saveRemindersBtn">Save reminders</button>
+      <button class="btn btn-ghost btn-block" id="notifyBtn">Enable in-app notifications</button>
+    </div>
+  </section>
+</main>
+
+<!-- Workout detail (slides over tabs) -->
+<section class="view workout-view" id="view-workout" hidden>
+  <button class="btn btn-ghost" id="backToTabs">← Back</button>
+  <div id="workoutDetail"></div>
+</section>
+
+<nav class="tabbar" id="tabbar">
+  <button data-tab="today" class="active">🏋️<span>Today</span></button>
+  <button data-tab="week">📅<span>Week</span></button>
+  <button data-tab="movements">🎯<span>Maxes</span></button>
+  <button data-tab="progress">📈<span>Progress</span></button>
+  <button data-tab="settings">⚙️<span>Settings</span></button>
+</nav>
+
+<div class="toast" id="toast" hidden></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

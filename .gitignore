@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+static/icons/*.png
+data/
+*.db
+*.db-journal
+.DS_Store
