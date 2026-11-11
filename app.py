@@ -236,12 +236,20 @@ STYLES = {
     },
 }
 
-# (day offset from Monday, focus label, movement-name keywords, accessories)
+# The split Harry trains: Push / Pull / Legs / Arms+Shoulders / Push+Pull,
+# Monday-Friday. (day offset from Monday, focus label, movement-name
+# keywords for the day's main lift, accessories)
 DAY_PLAN = [
-    (0, "Squat Day",    ("squat",),          ["Leg accessory", "Core"]),
-    (1, "Bench Day",    ("bench",),          ["Chest/triceps accessory", "Upper back"]),
-    (3, "Deadlift Day", ("deadlift",),       ["Posterior chain accessory", "Core"]),
-    (4, "Overhead Day", ("overhead", "press"), ["Shoulder accessory", "Arms"]),
+    (0, "Push Day",           ("bench",),
+     ["Incline press", "Lateral raises", "Triceps pushdown"]),
+    (1, "Pull Day",           ("deadlift", "row"),
+     ["Lat pulldown", "Seated cable row", "Biceps curl"]),
+    (2, "Legs Day",           ("squat",),
+     ["Leg press", "Romanian deadlift", "Calf raises"]),
+    (3, "Arms/Shoulders Day", ("overhead", "shoulder", "ohp"),
+     ["Lateral raises", "Biceps curl", "Triceps extension"]),
+    (4, "Push/Pull Day",      ("row", "bench"),
+     ["Chest fly", "Lat pulldown", "Face pull"]),
 ]
 
 
@@ -255,8 +263,9 @@ def find_movement(conn, keywords):
 
 
 def generate_week(conn, style_key, week_start=None):
-    """Create a week of 4 workouts from current maxes. Replaces any
-    existing week that starts on the same Monday."""
+    """Create a week of 5 workouts (Push / Pull / Legs / Arms+Shoulders /
+    Push+Pull) from current maxes. Replaces any existing week that starts
+    on the same Monday."""
     style = STYLES[style_key]
     if week_start is None:
         today = date.today()

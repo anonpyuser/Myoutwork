@@ -91,11 +91,15 @@ label { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: 
 .tabbar button span { font-size: 11px; font-weight: 700; }
 .tabbar button.active { color: var(--accent); }
 
-/* Workout view overlays the tab content */
+/* Workout view overlays the tab content. The :not([hidden]) rule is
+   load-bearing: .view{display:none} above would otherwise keep the
+   overlay invisible even after JS clears the hidden attribute, while
+   the tab bar is already hidden — locking the user on a dead screen. */
 .workout-view {
   position: fixed; inset: 0; z-index: 20; overflow-y: auto;
   background: var(--bg); padding: 14px; padding-bottom: 30px;
 }
+.workout-view:not([hidden]) { display: block; }
 
 /* Sets */
 .set-row {

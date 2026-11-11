@@ -177,13 +177,24 @@ function bindStylePicker(container, onPick) {
     b.addEventListener("click", () => onPick(b.dataset.style)));
 }
 
+let generating = false;
 async function generateWeek(styleOverride = null) {
-  const body = styleOverride ? { style: styleOverride } : {};
-  const { week } = await api("/api/weeks/generate", "POST", body);
-  state.week = week;
-  toast(`${week.style_label} week generated — ${week.wave_label}`);
-  if (state.tab === "week") loadWeek();
-  if (state.tab === "settings") renderSettings();
+  if (generating) return;
+  generating = true;
+  const btns = [$("#generateBtn"), $("#regenStyleBtn")].filter(Boolean);
+  btns.forEach((b) => { b.disabled = true; b.dataset.label = b.textContent; b.textContent = "Generating…"; });
+  try {
+    const body = styleOverride ? { style: styleOverride } : {};
+    const { week } = await api("/api/weeks/generate", "POST", body);
+    state.week = week;
+    toast(`${week.style_label} week generated — ${week.wave_label}`);
+    switchTab("week"); // land on the Week tab so the new week is in front of you
+  } catch (e) {
+    toast(`Couldn't generate the week: ${e.message}`);
+  } finally {
+    generating = false;
+    btns.forEach((b) => { b.disabled = false; b.textContent = b.dataset.label; });
+  }
 }
 
 /* ---------------- Workout detail ---------------- */
@@ -527,10 +538,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     b.addEventListener("click", () => switchTab(b.dataset.tab)));
   $("#backToTabs").addEventListener("click", closeWorkout);
   $("#generateBtn").addEventListener("click", () => generateWeek());
-  $("#regenStyleBtn").addEventListener("click", async () => {
-    await generateWeek(state.settings.training_style);
-    switchTab("week");
-  });
+  $("#regenStyleBtn").addEventListener("click", () =>
+    generateWeek(state.settings.training_style));
   $("#themeToggle").addEventListener("click", async () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     applyTheme(next);

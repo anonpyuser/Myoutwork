@@ -29,8 +29,9 @@ edit them — they're slots, not max-based lifts.
 
 - **Movements & maxes** — CRUD for lifts, current max, full max history,
   and a 50–100% (5% steps) percentage table per movement.
-- **Weekly generator** — one tap builds 4 days (Squat / Bench / Deadlift /
-  Overhead) from your maxes; regenerate anytime, edit any day, exercise,
+- **Weekly generator** — one tap builds the 5-day split (Push / Pull /
+  Legs / Arms+Shoulders / Push+Pull, Mon–Fri) from your maxes; the week
+  lands on the Week tab; regenerate anytime, edit any day, exercise,
   or set afterwards.
 - **Set logging** — sets prefilled from the prescription; steppers adjust
   actual weight/reps; check sets off; everything saves to SQLite the

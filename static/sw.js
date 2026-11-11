@@ -1,7 +1,7 @@
 /* Service worker: cache the app shell so the installed PWA opens fast
    and works on a flaky gym connection. API calls are always network —
    workout data must never be served stale. Bump CACHE on each release. */
-const CACHE = "grounded-strength-v1";
+const CACHE = "grounded-strength-v2";
 const SHELL = [
   "/",
   "/static/style.css",
